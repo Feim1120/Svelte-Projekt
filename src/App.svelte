@@ -1,7 +1,7 @@
 <script>
   import QuakMohle from './QuakMohle.svelte';
   import Currency from './Currency.svelte';
-  import Pacman from './pacman.svelte';
+  import Pacman from './Pacman.svelte';
 
   let currentPage = 'home';
 </script>
