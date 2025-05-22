@@ -8,7 +8,7 @@
 
 {#if currentPage === 'home'}
   <main class="text-center p-4">
-    <h1 class="text-2xl font-bold mb-6">🚀 willkommen</h1>
+    <h1 class="text-2xl font-bold mb-6">🚀 Willkommen zu mein Projekt</h1>
     <button class="bg-green-500 text-white px-4 py-2 rounded mb-4" on:click={() => currentPage = 'quak'}>
       🐸 quak-mohle spiel starten
     </button>

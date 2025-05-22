@@ -1,5 +1,6 @@
 <script>
-  import { onMount } from 'svelte';
+  import { onMount, createEventDispatcher } from 'svelte';
+  const dispatch = createEventDispatcher();
 
   let score = 0;
   let highscore = localStorage.getItem("highscore") || 0;
@@ -8,8 +9,8 @@
   let timeLeft = 30;
   let speed = 1000;
 
-  let timer;  // für den Timer-Interval
-  let moleMover; // für den Mole-Bewegungs-Timer
+  let timer;
+  let moleMover;
 
   function startGame(mode) {
     score = 0;
@@ -17,8 +18,8 @@
     gameRunning = true;
 
     if (mode === "easy") speed = 1200;
-    if (mode === "medium") speed = 800;
-    if (mode === "hard") speed = 400;
+    else if (mode === "medium") speed = 800;
+    else if (mode === "hard") speed = 400;
 
     moveMole();
     startTimer();
@@ -58,11 +59,20 @@
     }, 1000);
   }
 
+  function stopGame() {
+    clearInterval(timer);
+    clearTimeout(moleMover);
+    gameRunning = false;
+    moleIndex = -1;
+    timeLeft = 30;
+    dispatch('back'); // Event an Eltern senden, heißt jetzt "back"
+  }
+
   onMount(() => {
     return () => {
       clearInterval(timer);
       clearTimeout(moleMover);
-    }
+    };
   });
 </script>
 
@@ -76,6 +86,10 @@
   <button on:click={() => startGame("easy")}>Langsam 🐢</button>
   <button on:click={() => startGame("medium")}>Mittel 🐸</button>
   <button on:click={() => startGame("hard")}>Schnell 🐇</button>
+{/if}
+
+{#if gameRunning}
+  <button on:click={stopGame}>Zurück zum Menü</button>
 {/if}
 
 <div class="grid">
